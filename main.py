@@ -1,15 +1,9 @@
-import shutil
-import os
+from copy_files_module import copy_files
 
 FOLDER_SRC = "src"
 FOLDER_DST = "dst"
 
-def copy_files(src_folder, dst_folder):
-    shutil.copy2(f"{FOLDER_SRC}\\16.jpg", f"{FOLDER_DST}")
-    list_files = os.listdir(src_folder)
 
-    for i in list_files:
-        print(i)
 
 
 
