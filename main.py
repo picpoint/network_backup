@@ -1,6 +1,6 @@
 import paramiko
-from passwd import access_server_arhivs
 import datetime
+from passwd import access_server_arhivs
 
 
 hostname_server_backup = access_server_arhivs['hostname']
@@ -35,7 +35,7 @@ for name_of_file in list_files:
         remove_file_path = remove_file_path.replace("-", "_")
         print(remove_file_path)
 
-        local_file_path = f"{arhiv_name}" + ".txt"
+        local_file_path = f"{arhiv_name}" + ".tib"
         ssh.get(remove_file_path, local_file_path)
 
         print(f"Yes - {arhiv_name}")
