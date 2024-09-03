@@ -16,13 +16,15 @@ client.connect(hostname_server_backup, username=user_server_backup, password=pas
 
 
 '''
-выполнение команд на удалённом сервере
+Определение текущей даты
 '''
-not_exists_msg = "arhiv is not exists ... :-("
+not_copied_msg = "file not copied ... :-("
 current_dt = datetime.date.today()
 current_date = current_dt.strftime("%d-%m-%Y")
-# print(f"Current date - {current_date}")
 
+'''
+выполнение команд на удалённом сервере
+'''
 stdin, stdout, stderr = client.exec_command("cd ..; cd ..; cd /data2; ls")
 tmp_files = stdout.read().decode()
 list_files = []
@@ -36,33 +38,29 @@ for name_of_file in list_files:
         ssh = client.open_sftp()
         remove_file_path = f"/data2/{arhiv_name}" + "_full_b1_s1_v1.txt"
         remove_file_path = remove_file_path.replace("-", "_")
-        # name_of_file = remove_file_path[7:]
-        print(f"Full path - {remove_file_path}")
-        # print(f"File - {name_of_file}")
-
         local_file_path = f"backups/{arhiv_name}" + ".txt"
-        if os.path.exists(local_file_path):
-            print("Folder yes")
-        else:
-            print("foldder no ...")
+        folder_name = "backups"
+
+        if os.path.exists(folder_name) != True:
+            os.mkdir("backups")
+            print(f"Folder \"{folder_name}\" is created!")
 
         try:
             ssh.get(remove_file_path, local_file_path)
+            print("File is copied")
         except BaseException:
             print("Что то пошло не так...")
         finally:
             ssh.close()
 
-        print(f"Yes - {arhiv_name}")
-        not_exists_msg = ""
+        not_copied_msg = ""
 
 
-if not_exists_msg != "":
-    print(not_exists_msg)
+if not_copied_msg != "":
+    print(not_copied_msg)
 
 
 '''
 закрытие соединения после копирования
 '''
-# ssh.close()
 client.close()
