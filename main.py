@@ -38,12 +38,16 @@ for name_of_file in list_files:
         ssh = client.open_sftp()
         remove_file_path = f"/data2/{arhiv_name}" + "_full_b1_s1_v1.txt"
         remove_file_path = remove_file_path.replace("-", "_")
-        local_file_path = f"backups/{arhiv_name}" + ".txt"
+        local_file_path = f"/backups/{arhiv_name}" + ".txt"
         folder_name = "backups"
 
-        if os.path.exists(folder_name) != True:
-            os.mkdir("backups")
-            print(f"Folder \"{folder_name}\" is created!")
+        try:
+            if os.path.exists(folder_name) != True:
+                os.mkdir("/backups")
+                print(f"Folder \"{folder_name}\" is created!")
+        except BaseException:
+            print("Folder is exists")
+
 
         try:
             ssh.get(remove_file_path, local_file_path)
