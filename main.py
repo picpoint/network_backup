@@ -22,6 +22,7 @@ not_copied_msg = "file not copied ... :-("
 current_dt = datetime.date.today()
 current_date = current_dt.strftime("%d-%m-%Y")
 
+
 '''
 выполнение команд на удалённом сервере
 '''
